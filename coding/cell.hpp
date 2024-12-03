@@ -8,5 +8,6 @@ public:
     Cell();                                     // Constructeur par défaut
     Cell(bool living, bool obstacle);   // Constructeur avec état initial
     bool getState() const;                      // Retourne l'état de la cellule
+    bool getObstacle() const;
     void editState(bool state);                 // Change l'état de la cellule
 };
