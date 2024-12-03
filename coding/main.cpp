@@ -24,7 +24,7 @@ int main() {
         grid.updateGrid();
         grid.displayGrid();
         this_thread::sleep_for(chrono::milliseconds(500));
-        system("cls");
+        cout << "\033[2J\033[H";
     }
     cin >> test;
     return 0;
