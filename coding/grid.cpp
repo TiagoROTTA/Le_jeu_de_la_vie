@@ -33,43 +33,25 @@ void Grid::surroundingCheck(int posY, int posX) {
     int nearby = 0; // Compteur de voisins vivants
     bool stateCell = grid[posY][posX].getState(); // État actuel de la cellule
 
-    // Parcours des 8 voisins
     for (int i = -1; i <= 1; i++) {
         for (int j = -1; j <= 1; j++) {
-            // Ignorer la cellule elle-même
-            if (i == 0 && j == 0) continue;
+            if (i == 0 && j == 0) continue; // Ignorer la cellule elle-même
 
-            // Vérifier si le voisin est dans les limites
             int neighborY = posY + i;
             int neighborX = posX + j;
 
-            if (neighborY >= 0 && neighborY < sizeY && neighborX >= 0 && neighborX < sizeX) {
-                if (grid[neighborY][neighborX].getState()) {
-                    nearby++; // Incrémenter si le voisin est vivant
-                }
-            }
-            if(neighborY > sizeY){
-                if (grid[0][neighborX].getState()) {
-                    nearby++; // Incrémenter si le voisin est vivant
-                }
-            }
-            if(neighborY < 0){
-                if (grid[sizeY-1][neighborX].getState()) {
-                    nearby++; // Incrémenter si le voisin est vivant
-                }
-            }
-            if(neighborY > sizeX){
-                if (grid[neighborY][0].getState()) {
-                    nearby++; // Incrémenter si le voisin est vivant
-                }
-            }
-            if(neighborY < 0){
-                if (grid[neighborY][sizeX-1].getState()) {
-                    nearby++; // Incrémenter si le voisin est vivant
-                }
+            // Gestion des débordements : coordonnées toroïdales
+            if (neighborY < 0) neighborY = sizeY - 1;
+            if (neighborY >= sizeY) neighborY = 0;
+            if (neighborX < 0) neighborX = sizeX - 1;
+            if (neighborX >= sizeX) neighborX = 0;
+
+            if (grid[neighborY][neighborX].getState()) {
+                nearby++; // Incrémenter si le voisin est vivant
             }
         }
     }
+
 
     // Appliquer les règles du jeu
     if (stateCell && (nearby == 2 || nearby == 3)) {
