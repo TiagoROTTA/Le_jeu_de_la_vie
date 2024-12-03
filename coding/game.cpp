@@ -41,6 +41,6 @@ void Game::gameLoop(){
         gameTerminal(iterationAmount);
     }
     else {
-        gameGUI(iterationAMount);
+        gameGUI(iterationAmount);
     }
 };
