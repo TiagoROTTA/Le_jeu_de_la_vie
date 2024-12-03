@@ -8,6 +8,10 @@ bool Cell::getState() const {
     return living;
 }
 
+bool Cell::getObstacle() const {
+    return obstacle;
+}
+
 void Cell::editState(bool state) {
     living = state;
 }

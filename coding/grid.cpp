@@ -32,6 +32,7 @@ void Grid::create() {
 
 // Vérifie les voisins d'une cellule et applique les règles du jeu
 void Grid::surroundingCheck(int posY, int posX) {
+    if (!grid[posY][posX].getObstacle()){
     int nearby = 0; // Compteur de voisins vivants
     bool stateCell = grid[posY][posX].getState(); // État actuel de la cellule
 
@@ -62,6 +63,8 @@ void Grid::surroundingCheck(int posY, int posX) {
         tmp[posY][posX].editState(true); // Cellule morte devient vivante
     } else {
         tmp[posY][posX].editState(false); // Sinon, la cellule meurt ou reste morte
+    }
+    
     }
 }
 
