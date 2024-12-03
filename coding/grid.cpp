@@ -207,5 +207,5 @@ int Grid::initGrid() {
     cin >> numIterations;
 
     runIterations(numIterations, outputFolder);
-    return numIterations;
+    return 0;
 }
