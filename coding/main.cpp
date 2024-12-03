@@ -4,7 +4,6 @@
 #include <cstdlib>
 #include <fstream>
 
-
 #include "game.hpp"
 
 int main() {
