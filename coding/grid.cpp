@@ -1,9 +1,11 @@
 #include "grid.hpp"
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <vector>
+#include <sys/stat.h>
 #include <chrono>
 #include <thread>
-#include <fstream>
 
 using namespace std;
 
@@ -95,34 +97,84 @@ void Grid::updateGrid() {
 }
 
 
+bool Grid::folderExists(const std::string& folderPath) {
+    struct stat info;
+    if (stat(folderPath.c_str(), &info) != 0) {
+        return false; // Le dossier n'existe pas
+    }
+    return (info.st_mode & S_IFDIR) != 0; // Vérifie si c'est un dossier
+}
+
+bool Grid::createFolder(const std::string& folderPath) {
+    // Commande système portable pour créer un dossier
+    return mkdir(folderPath.c_str(), 0777) == 0 || errno == EEXIST;
+}
+
+void Grid::writeGridToFile(const std::vector<std::vector<Cell>>& grid, const std::string& filePath) {
+    std::ofstream outFile(filePath);
+    if (!outFile.is_open()) {
+        std::cerr << "Erreur : Impossible d'ouvrir le fichier " << filePath << std::endl;
+        return;
+    }
+
+    // Écriture des dimensions de la grille
+    outFile << sizeY << " " << sizeX << "\n";
+
+    // Écriture de l'état de chaque cellule
+    for (const auto& row : grid) {
+        for (const auto& cell : row) {
+            outFile << (cell.getState() ? 1 : 0) << " "; // 1 pour vivant, 0 pour mort
+        }
+        outFile << "\n";
+    }
+
+    outFile.close();
+}
+// Fonction pour gérer les itérations et l'écriture dans des fichiers
+void Grid::runIterations(int numIterations, const string& outputFolder) {
+    if (!folderExists(outputFolder)) {
+        if (!createFolder(outputFolder)) {
+            cerr << "Erreur : Impossible de créer le dossier " << outputFolder << endl;
+            return;
+        }
+    }
+
+    for (int iter = 0; iter < numIterations; ++iter) {
+        string filePath = outputFolder + "/iteration_" + to_string(iter) + ".txt";
+        writeGridToFile(grid, filePath); // Écrit l'état courant dans un fichier
+        updateGrid(); // Met à jour la grille pour la prochaine itération
+        this_thread::sleep_for(chrono::milliseconds(500)); // Pause pour visualiser l'évolution
+    }
+
+    cout << "État des " << numIterations << " premières itérations sauvegardé dans " << outputFolder << endl;
+}
+
 int Grid::initGrid() {
     int state;
     cout << "Utiliser un fichier (1) ou configurer manuellement (2) ? ";
     cin >> state;
 
+    string outputFolder;
+
     if (state == 1) {
-        //create();
         string fileName;
         cout << "Entrez le chemin du fichier source : ";
         cin >> fileName;
 
         ifstream file(fileName);
         while (!file.is_open()) {
-            cout << "Le fichier ne corespond pas" << endl;
-            cout << "Veuillez entrer à nouveau le lien du fichier" << endl;
+            cout << "Le fichier ne correspond pas." << endl;
+            cout << "Veuillez entrer à nouveau le lien du fichier : ";
             cin >> fileName;
-            ifstream file(fileName);
+            file.open(fileName);
         }
 
         int rows, cols;
         file >> rows >> cols;
         sizeY = rows;
         sizeX = cols;
-       /* if (rows != sizeY || cols != sizeX) {
-            cerr << "Erreur : dimensions incompatibles." << endl;
-            return 1;
-        }*/
-       create();
+        create();
+
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
                 int value;
@@ -132,12 +184,12 @@ int Grid::initGrid() {
         }
 
         file.close();
-        displayGrid();
-        this_thread::sleep_for(chrono::milliseconds(1000));
+        outputFolder = fileName + "_out";
+
     } else if (state == 2) {
         create();
-        int posX, posY;
         cout << "Entrez les cellules vivantes (Y X). Tapez -1 -1 pour terminer." << endl;
+        int posX, posY;
         while (true) {
             cin >> posY >> posX;
             if (posY == -1 && posX == -1) break;
@@ -147,6 +199,13 @@ int Grid::initGrid() {
                 cout << "Coordonnées invalides." << endl;
             }
         }
+        outputFolder = "manual_out";
     }
+
+    int numIterations;
+    cout << "Entrez le nombre d'itérations à exécuter : ";
+    cin >> numIterations;
+
+    runIterations(numIterations, outputFolder);
     return 0;
 }

@@ -15,9 +15,8 @@ bool Game::getMode(){
     return mode;
 };
 
-void Game::gameLoop(){
-    if (!mode){
-        int gridY = 20;
+void Game::gameTerminal()const{
+    int gridY = 20;
         int gridX = 40;
         Grid grid(gridY, gridX);
 
@@ -28,6 +27,12 @@ void Game::gameLoop(){
             this_thread::sleep_for(chrono::milliseconds(500));
             system("clear");
         }
+};
+
+
+void Game::gameLoop(){
+    if (!mode){
+        gameTerminal();
     }
         
 };
