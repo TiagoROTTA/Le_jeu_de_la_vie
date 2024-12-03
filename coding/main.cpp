@@ -2,6 +2,7 @@
 #include <chrono>
 #include <thread>
 #include <cstdlib>
+#include <fstream>
 
 #include "grid.hpp"
 
@@ -15,12 +16,11 @@ int main() {
     int test;
     Grid grid(gridY, gridX);
 
-    grid.create();
-    grid.displayGrid();
-    gridInit(grid);
+    grid.initGrid();
     grid.displayGrid();
     cin >> test;
     while(true){
+        cout << "test succed succefully " << endl;
         grid.updateGrid();
         grid.displayGrid();
         this_thread::sleep_for(chrono::milliseconds(500));
