@@ -33,13 +33,10 @@ void Grid::surroundingCheck(int posY, int posX) {
     int nearby = 0; // Compteur de voisins vivants
     bool stateCell = grid[posY][posX].getState(); // État actuel de la cellule
 
-    cout << "jusque la ça va !" << endl;
-
     // Parcours des 8 voisins
     for (int i = -1; i <= 1; i++) {
         for (int j = -1; j <= 1; j++) {
             // Ignorer la cellule elle-même
-            cout << " ignore ok" << endl; 
             if (i == 0 && j == 0) continue;
 
             // Vérifier si le voisin est dans les limites
@@ -51,31 +48,26 @@ void Grid::surroundingCheck(int posY, int posX) {
                     nearby++; // Incrémenter si le voisin est vivant
                 }
             }
-            cout << "First ok" << endl;
             if(neighborY > sizeY){
                 if (grid[0][neighborX].getState()) {
                     nearby++; // Incrémenter si le voisin est vivant
                 }
             }
-            cout << "Secong ok" << endl;
             if(neighborY < 0){
                 if (grid[sizeY-1][neighborX].getState()) {
                     nearby++; // Incrémenter si le voisin est vivant
                 }
             }
-            cout << "Therd ok" << endl;
             if(neighborY > sizeX){
                 if (grid[neighborY][0].getState()) {
                     nearby++; // Incrémenter si le voisin est vivant
                 }
             }
-            cout << "Fourth ok" << endl;
             if(neighborY < 0){
                 if (grid[neighborY][sizeX-1].getState()) {
                     nearby++; // Incrémenter si le voisin est vivant
                 }
             }
-            cout << "Fift ok" << endl;
         }
     }
 
@@ -109,7 +101,6 @@ void Grid::stateChange(int posY, int posX) {
 void Grid::updateGrid() {
     for (int i = 0; i < sizeY; i++) {
         for (int j = 0; j < sizeX; j++) {
-            cout << "verything is ok" << endl;
             surroundingCheck(i, j); // Calculer le nouvel état pour chaque cellule
         }
     }
