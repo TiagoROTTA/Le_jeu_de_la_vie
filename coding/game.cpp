@@ -36,7 +36,7 @@ void Game::gameGUI(int iterationAmount) const{
 void Game::gameLoop(){
     int iterationAmount;
     cout << "Entrez le nombre d'itérations souhaité : " << endl;
-    cint >> iterationAmount;
+    cin >> iterationAmount;
     if (!mode){
         gameTerminal(iterationAmount);
     }
