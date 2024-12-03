@@ -15,10 +15,7 @@ int main() {
     int gridX = 40;
     int test;
     Grid grid(gridY, gridX);
-
     grid.initGrid();
-    grid.displayGrid();
-    cin >> test;
     while(true){
         grid.updateGrid();
         grid.displayGrid();

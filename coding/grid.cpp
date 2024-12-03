@@ -1,6 +1,8 @@
 #include "grid.hpp"
 #include <iostream>
 #include <string>
+#include <chrono>
+#include <thread>
 #include <fstream>
 
 using namespace std;
@@ -102,18 +104,22 @@ int Grid::initGrid() {
         cin >> fileName;
 
         ifstream file(fileName);
-        if (!file.is_open()) {
-            cerr << "Erreur : impossible d'ouvrir le fichier." << endl;
-            return 1;
+        while (!file.is_open()) {
+            cout << "Le fichier ne corespond pas" << endl;
+            cout << "Veuillez entrer à nouveau le lien du fichier" << endl;
+            cin >> fileName;
+            ifstream file(fileName);
         }
 
         int rows, cols;
         file >> rows >> cols;
-        if (rows != sizeY || cols != sizeX) {
+        sizeY = rows;
+        sizeX = cols;
+       /* if (rows != sizeY || cols != sizeX) {
             cerr << "Erreur : dimensions incompatibles." << endl;
             return 1;
-        }
-
+        }*/
+       create();
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
                 int value;
@@ -123,6 +129,8 @@ int Grid::initGrid() {
         }
 
         file.close();
+        displayGrid();
+        this_thread::sleep_for(chrono::milliseconds(1000));
     } else if (state == 2) {
         create();
         int posX, posY;

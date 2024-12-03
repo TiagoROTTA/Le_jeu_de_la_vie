@@ -3,6 +3,7 @@
 #include "grid.hpp"
 #include <chrono>
 #include <thread>
+#include <fstream>
 
 using namespace std;
 
@@ -15,18 +16,21 @@ bool Game::getMode(){
 };
 
 void Game::gameLoop(bool mode){
-    int gridY = 20;
-    int gridX = 40;
-    int test;
-    Grid grid(gridY, gridX);
+    bool mode = getMode();
+    if (mode){
+        int gridY = 20;
+        int gridX = 40;
+        int test;
+        Grid grid(gridY, gridX);
 
-    grid.initGrid();
-    grid.displayGrid();
-    cin >> test;
-    while(true){
-        grid.updateGrid();
-        grid.displayGrid();
-        this_thread::sleep_for(chrono::milliseconds(500));
-        system("cls");
-    }
+        grid.initGrid();
+        while(true){
+            grid.updateGrid();
+            grid.displayGrid();
+            this_thread::sleep_for(chrono::milliseconds(500));
+            system("clear");
+        }
+    } 
+
+    
 };
