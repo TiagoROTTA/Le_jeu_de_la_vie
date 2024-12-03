@@ -11,7 +11,7 @@ using namespace std;
 
 // Constructeur : initialise la grille et le tampon temporaire
 Grid::Grid(int sizeY, int sizeX) 
-    : sizeX(sizeX), sizeY(sizeY), grid(sizeY, vector<Cell>(sizeX)), tmp(sizeY, vector<Cell>(sizeX)) {}
+    : sizeX(sizeX), sizeY(sizeY), grid(sizeY, vector<Cell>(sizeX)), tmp(sizeY, vector<Cell>(sizeX)), folderPath() {}
 
 // Retourne la taille X de la grille
 int Grid::getSizeX() const {
@@ -31,6 +31,7 @@ void Grid::create() {
         }
     }
 }
+
 
 // Vérifie les voisins d'une cellule et applique les règles du jeu
 void Grid::surroundingCheck(int posY, int posX) {
@@ -88,16 +89,26 @@ void Grid::stateChange(int posY, int posX) {
 
 
 void Grid::updateGrid() {
+    ofstream outFile(filePath);
+    if (!outFile.is_open()) {
+        cerr << "Erreur : Impossible d'ouvrir le fichier " << filePath << endl;
+        return;
+    }
+    outFile << sizeY << " " << sizeX << "\n";*
+
     for (int i = 0; i < sizeY; i++) {
         for (int j = 0; j < sizeX; j++) {
             surroundingCheck(i, j); // Calculer le nouvel état pour chaque cellule
+            outFile << (tmp[i][j].getState() ? 1 : 0) << " ";
         }
+        outFile << "\n";
     }
+    outFile.close();
     grid = tmp; // Remplacer la grille principale par le tampon
 }
 
 
-bool Grid::folderExists(const std::string& folderPath) {
+bool Grid::folderExists() {
     struct stat info;
     if (stat(folderPath.c_str(), &info) != 0) {
         return false; // Le dossier n'existe pas
@@ -105,33 +116,14 @@ bool Grid::folderExists(const std::string& folderPath) {
     return (info.st_mode & S_IFDIR) != 0; // Vérifie si c'est un dossier
 }
 
-bool Grid::createFolder(const std::string& folderPath) {
+bool Grid::createFolder() {
     // Commande système portable pour créer un dossier
     return mkdir(folderPath.c_str(), 0777) == 0 || errno == EEXIST;
 }
 
-void Grid::writeGridToFile(const std::vector<std::vector<Cell>>& grid, const std::string& filePath) {
-    std::ofstream outFile(filePath);
-    if (!outFile.is_open()) {
-        std::cerr << "Erreur : Impossible d'ouvrir le fichier " << filePath << std::endl;
-        return;
-    }
 
-    // Écriture des dimensions de la grille
-    outFile << sizeY << " " << sizeX << "\n";
-
-    // Écriture de l'état de chaque cellule
-    for (const auto& row : grid) {
-        for (const auto& cell : row) {
-            outFile << (cell.getState() ? 1 : 0) << " "; // 1 pour vivant, 0 pour mort
-        }
-        outFile << "\n";
-    }
-
-    outFile.close();
-}
 // Fonction pour gérer les itérations et l'écriture dans des fichiers
-void Grid::runIterations(int numIterations, const string& outputFolder) {
+void Grid::folderCheck(const string& outputFolder) {
     if (!folderExists(outputFolder)) {
         if (!createFolder(outputFolder)) {
             cerr << "Erreur : Impossible de créer le dossier " << outputFolder << endl;
@@ -140,7 +132,7 @@ void Grid::runIterations(int numIterations, const string& outputFolder) {
     }
 
     for (int iter = 0; iter < numIterations; ++iter) {
-        string filePath = outputFolder + "/iteration_" + to_string(iter) + ".txt";
+        filePath = outputFolder + "/iteration_" + to_string(iter) + ".txt";
         writeGridToFile(grid, filePath); // Écrit l'état courant dans un fichier
         updateGrid(); // Met à jour la grille pour la prochaine itération
         this_thread::sleep_for(chrono::milliseconds(500)); // Pause pour visualiser l'évolution
@@ -149,7 +141,7 @@ void Grid::runIterations(int numIterations, const string& outputFolder) {
     cout << "État des " << numIterations << " premières itérations sauvegardé dans " << outputFolder << endl;
 }
 
-int Grid::initGrid() {
+string Grid::initGrid() {
     int state;
     cout << "Utiliser un fichier (1) ou configurer manuellement (2) ? ";
     cin >> state;
@@ -184,7 +176,7 @@ int Grid::initGrid() {
         }
 
         file.close();
-        outputFolder = fileName + "_out";
+        outputFolder = fileName-".txt" + "_out";
 
     } else if (state == 2) {
         create();
@@ -202,10 +194,6 @@ int Grid::initGrid() {
         outputFolder = "manual_out";
     }
 
-    int numIterations;
-    cout << "Entrez le nombre d'itérations à exécuter : ";
-    cin >> numIterations;
-
-    runIterations(numIterations, outputFolder);
-    return numIterations;
+    folderCheck(outputFolder);
+    return outputFolder;
 }

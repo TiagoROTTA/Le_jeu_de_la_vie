@@ -10,6 +10,7 @@ private:
     int sizeX, sizeY;
     vector<vector<Cell>> grid;
     vector<vector<Cell>> tmp;
+    string folderPath;
 
 
     void surroundingCheck(int posY, int posX); // Vérifie les voisins d'une cellule et applique les règles
