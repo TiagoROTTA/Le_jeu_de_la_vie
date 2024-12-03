@@ -6,5 +6,5 @@ private:
 public:
     Game(bool mode = 0): mode(mode) {}               // Constructeur
     bool getMode();
-    void gameLoop(bool mode);
+    void gameLoop();
 };
