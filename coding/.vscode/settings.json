@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "iostream": "cpp",
+        "vector": "cpp",
+        "iosfwd": "cpp",
+        "xlocbuf": "cpp",
+        "chrono": "cpp",
+        "ostream": "cpp"
+    }
+}

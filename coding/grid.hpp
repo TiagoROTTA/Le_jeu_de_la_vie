@@ -19,4 +19,5 @@ public:
     int getSizeY()const;
     void stateChange(int posX, int posY);
     void updateGrid();
+    int initGrid();
 };
