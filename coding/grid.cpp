@@ -29,6 +29,7 @@ void Grid::changePath(string path){
 
 // Initialise la grille avec des cellules mortes
 void Grid::create() {
+    
     for (int i = 0; i < sizeY; i++) {
         for (int j = 0; j < sizeX; j++) {
             grid[i][j] = Cell(); // Toutes les cellules sont mortes au départ
