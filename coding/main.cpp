@@ -20,7 +20,6 @@ int main() {
     grid.displayGrid();
     cin >> test;
     while(true){
-        cout << "test succed succefully " << endl;
         grid.updateGrid();
         grid.displayGrid();
         this_thread::sleep_for(chrono::milliseconds(500));

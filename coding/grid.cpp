@@ -83,7 +83,6 @@ void Grid::stateChange(int posY, int posX) {
 void Grid::updateGrid() {
     for (int i = 0; i < sizeY; i++) {
         for (int j = 0; j < sizeX; j++) {
-            cout << "verything is ok" << endl;
             surroundingCheck(i, j); // Calculer le nouvel état pour chaque cellule
         }
     }
