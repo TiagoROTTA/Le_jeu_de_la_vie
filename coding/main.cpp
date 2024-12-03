@@ -4,30 +4,22 @@
 #include <cstdlib>
 #include <fstream>
 
-#include "grid.hpp"
+
+#include "game.hpp"
 
 using namespace std;
 
-void gridInit(Grid& grid);
+//void gridInit(Grid& grid);
 
 int main() {
-    int gridY = 20;
-    int gridX = 40;
-    int test;
-    Grid grid(gridY, gridX);
-    grid.initGrid();
-    while(true){
-        grid.updateGrid();
-        grid.displayGrid();
-        this_thread::sleep_for(chrono::milliseconds(500));
-        system("clear");
-    }
-    cin >> test;
+    Game game;
+    game.getMode();
+    game.gameLoop();
     return 0;
 }
 
 
-
+/*
 void gridInit(Grid &grid){
     cout << "Initialisation des etats de la grille"<< endl;
     cout << "Mettez 999 pour sortir du mode ou bien entrez la coordonnee selon  X puis en Y"<< endl;
@@ -54,4 +46,4 @@ void gridInit(Grid &grid){
         }
 
     }
-}
+}*/
