@@ -11,7 +11,6 @@ using namespace std;
 void gridInit(Grid& grid);
 
 int main() {
-    // on fait un petit test
     int gridY = 20;
     int gridX = 40;
     int test;
