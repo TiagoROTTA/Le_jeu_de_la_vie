@@ -3,9 +3,10 @@
 class Cell {
 private:
     bool living;                    // État de la cellule
+    bool obstacle;                  // La cellule est un obstacle ou non 
 public:
-    Cell();                          // Constructeur par défaut
-    Cell(bool living);               // Constructeur avec état initial
-    bool getState() const;           // Retourne l'état de la cellule
-    void editState(bool state);      // Change l'état de la cellule
+    Cell();                                     // Constructeur par défaut
+    Cell(bool living, bool obstacle);   // Constructeur avec état initial
+    bool getState() const;                      // Retourne l'état de la cellule
+    void editState(bool state);                 // Change l'état de la cellule
 };

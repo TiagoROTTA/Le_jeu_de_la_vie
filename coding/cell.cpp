@@ -1,8 +1,8 @@
 #include "cell.hpp"
 
-Cell::Cell() : living(false) {}
+Cell::Cell() : living(false), obstacle(false) {}
 
-Cell::Cell(bool living) : living(living) {}
+Cell::Cell(bool living, bool obstacle = false) : living(living), obstacle(obstacle) {}
 
 bool Cell::getState() const {
     return living;
