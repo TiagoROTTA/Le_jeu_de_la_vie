@@ -14,9 +14,8 @@ private:
 
 
     void surroundingCheck(int posY, int posX); // Vérifie les voisins d'une cellule et applique les règles
-    void writeGridToFile(const vector<vector<Cell>>& grid, const string& filePath); // Écrit une grille dans un fichier
-    bool folderExists(const string& folderPath); // Vérifie si un dossier existe
-    bool createFolder(const string& folderPath); // Crée un dossier
+    bool folderExists(string folderPath); // Vérifie si un dossier existe
+    bool createFolder(string folderPath); // Crée un dossier
 
 public:
     Grid(int sizeX = 20, int sizeY = 20);
@@ -26,6 +25,7 @@ public:
     int getSizeY()const;
     void stateChange(int posX, int posY);
     void updateGrid();
-    int initGrid();
-    void runIterations(int numIterations, const string& outputFolder); // Exécute les itérations et sauvegarde les états
+    string initGrid();
+    void folderCheck(string outputFolder); 
+    void changePath(string path);
 };

@@ -23,6 +23,10 @@ int Grid::getSizeY() const {
     return sizeY;
 }
 
+void Grid::changePath(string path){
+    folderPath = path;
+}
+
 // Initialise la grille avec des cellules mortes
 void Grid::create() {
     for (int i = 0; i < sizeY; i++) {
@@ -89,12 +93,12 @@ void Grid::stateChange(int posY, int posX) {
 
 
 void Grid::updateGrid() {
-    ofstream outFile(filePath);
+    ofstream outFile(this->folderPath);
     if (!outFile.is_open()) {
-        cerr << "Erreur : Impossible d'ouvrir le fichier " << filePath << endl;
+        cerr << "Erreur : Impossible d'ouvrir le fichier " << this->folderPath << endl;
         return;
     }
-    outFile << sizeY << " " << sizeX << "\n";*
+    outFile << sizeY << " " << sizeX << "\n";
 
     for (int i = 0; i < sizeY; i++) {
         for (int j = 0; j < sizeX; j++) {
@@ -108,38 +112,30 @@ void Grid::updateGrid() {
 }
 
 
-bool Grid::folderExists() {
+bool Grid::folderExists(string folderpath) {
     struct stat info;
-    if (stat(folderPath.c_str(), &info) != 0) {
+    if (stat(folderpath.c_str(), &info) != 0) {
         return false; // Le dossier n'existe pas
     }
     return (info.st_mode & S_IFDIR) != 0; // Vérifie si c'est un dossier
 }
 
-bool Grid::createFolder() {
+bool Grid::createFolder(string folderpath) {
     // Commande système portable pour créer un dossier
-    return mkdir(folderPath.c_str(), 0777) == 0 || errno == EEXIST;
+    return mkdir(folderpath.c_str(), 0777) == 0 || errno == EEXIST;
 }
 
 
 // Fonction pour gérer les itérations et l'écriture dans des fichiers
-void Grid::folderCheck(const string& outputFolder) {
+void Grid::folderCheck(string outputFolder) {
     if (!folderExists(outputFolder)) {
         if (!createFolder(outputFolder)) {
             cerr << "Erreur : Impossible de créer le dossier " << outputFolder << endl;
             return;
         }
     }
-
-    for (int iter = 0; iter < numIterations; ++iter) {
-        filePath = outputFolder + "/iteration_" + to_string(iter) + ".txt";
-        writeGridToFile(grid, filePath); // Écrit l'état courant dans un fichier
-        updateGrid(); // Met à jour la grille pour la prochaine itération
-        this_thread::sleep_for(chrono::milliseconds(500)); // Pause pour visualiser l'évolution
-    }
-
-    cout << "État des " << numIterations << " premières itérations sauvegardé dans " << outputFolder << endl;
 }
+
 
 string Grid::initGrid() {
     int state;
@@ -176,7 +172,8 @@ string Grid::initGrid() {
         }
 
         file.close();
-        outputFolder = fileName-".txt" + "_out";
+        outputFolder = fileName.substr(0, fileName.find_last_of('.'));
+        outputFolder = outputFolder + "_out";
 
     } else if (state == 2) {
         create();

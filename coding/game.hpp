@@ -6,6 +6,7 @@ private:
 public:
     Game(bool mode = 0): mode(mode) {}               // Constructeur
     bool getMode();
-    void gameTerminal()const;
+    void gameTerminal(int iterationAmount)const;
+    void gameGUI(int iterationAmount)const;
     void gameLoop();
 };
