@@ -93,6 +93,12 @@ void Grid::stateChange(int posY, int posX) {
 }
 
 
+bool Grid::getCellState(int posY, int posX) const {
+    return grid[posY][posX].getState();
+}
+
+
+
 void Grid::updateGrid() {
     ofstream outFile(this->folderPath);
     if (!outFile.is_open()) {

@@ -10,12 +10,19 @@ using namespace std;
 
 class GUI {
 private:
-    int cellSize = 2;
-    int gridWidth = 940;
-    int gridHeight = 560;
-    bool isPaused = false;  // Variable pour gérer l'état de pause
-    unsigned int generationCount = 0;  // Compteur de générations
-    int pause = 100;
+    int cellSize;
+    int gridWidth;
+    int gridHeight;
+    sf::RenderWindow window;
+    Grid* grid; // Déclaré avant generationCount
+    int generationCount;
+    int pause;
+    bool isPaused;
+
+    // Méthode auxiliaire pour compter les cellules vivantes
+    int countLivingCells();
+
+
 
     const std::vector<std::vector<int>> glider = {
     {0, 1, 0},
@@ -66,15 +73,10 @@ private:
     };
 
 public:
-    GUI(int cellSize, int gridWidth, int gridHeight);
-    int countLivingCells(Grid& grid);
-    void render(sf::RenderWindow& window, sf::Text& generationText, Grid& grid);
-    void handleMouseClick(sf::RenderWindow &window);
+    GUI(int cellSize, int gridWidth, int gridHeight, Grid* grid);
+
+    void play(); // Méthode principale pour jouer
+    void render(); // Méthode pour afficher la grille
+    void handleMouseClick(); // Gestion des clics
     void placePattern(const std::vector<std::vector<int>>& pattern);
-    void play(Grid& grid);
-
-
-
-
-
 };

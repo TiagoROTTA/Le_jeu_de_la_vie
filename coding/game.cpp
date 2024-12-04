@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include <stdlib.h>
+#include "GUI.hpp"
 
 using namespace std;
 
@@ -27,7 +28,9 @@ void Game::gameTerminal(int iterationAmount, string& outputFolder, Grid& grid)co
     }
 };
 
-void Game::gameGUI(int iterationAmount) const{
+void Game::gameGUI(int iterationAmount, Grid& grid) const{
+    GUI graphic(5, 100, 100, &grid);
+    graphic.play();
 
 }
 
@@ -44,6 +47,6 @@ void Game::gameLoop(){
         gameTerminal(iterationAmount, outputFolder, grid);
     }
     else {
-        gameGUI(iterationAmount);
+        gameGUI(iterationAmount, grid);
     }
 };
