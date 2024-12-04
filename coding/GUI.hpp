@@ -1,9 +1,10 @@
-/*
+
 
 #pragma once
 #include <vector>
+#include <SFML/Graphics.hpp>
 #include <string>
-#include "cell.hpp"
+#include "grid.hpp"
 
 using namespace std;
 
@@ -70,10 +71,10 @@ public:
     void render(sf::RenderWindow& window, sf::Text& generationText, Grid& grid);
     void handleMouseClick(sf::RenderWindow &window);
     void placePattern(const std::vector<std::vector<int>>& pattern);
+    void play(Grid& grid);
 
 
 
 
 
 };
-*/

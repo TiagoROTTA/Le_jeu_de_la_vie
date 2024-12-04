@@ -1,26 +1,26 @@
-/*
+
 #include "GUI.hpp"
 #include <SFML/Graphics.hpp>
-#include <vector>
 #include <ctime>
 #include <cstdlib>
-#include <string>
 
+
+using namespace sf;
 
 GUI::GUI(int cellSize, int gridWidth, int gridHeight){
-    sf::RenderWindow window(sf::VideoMode(gridWidth * cellSize, gridHeight * cellSize), "Game of Life");
+    RenderWindow window(VideoMode(gridWidth * cellSize, gridHeight * cellSize), "Game of Life");
 
     // Charger une police pour le texte
-    sf::Font font;
+    Font font;
     if (!font.loadFromFile("arial.ttf")) {
         throw std::runtime_error("Failed to load font arial.ttf"); // Erreur si la police n'est pas trouvée
     }
 
     // Configurer le texte du compteur de générations
-    sf::Text generationText;
+    Text generationText;
     generationText.setFont(font);
     generationText.setCharacterSize(20);
-    generationText.setFillColor(sf::Color::White);
+    generationText.setFillColor(Color::White);
     generationText.setPosition((gridWidth * cellSize) / 2 - 50, 5);  // Centré en haut
 }
 
@@ -29,8 +29,8 @@ GUI::GUI(int cellSize, int gridWidth, int gridHeight){
 // Compter le nombre de cellules vivantes
 int GUI::countLivingCells(Grid& grid) {
     int count = 0;
-    for (int y = 0; y < grid.getsizeY(); ++y) {
-        for (int x = 0; x < grid.getsizeX(); ++x) {
+    for (int y = 0; y < grid.getSizeY(); ++y) {
+        for (int x = 0; x < grid.getSizeX(); ++x) {
             if (grid[y][x].getState()){
                 count += 1;
             }
@@ -40,13 +40,13 @@ int GUI::countLivingCells(Grid& grid) {
 }
 
 // Rendre la grille et le texte dans la fenêtre
-void GUI::render(sf::RenderWindow& window, sf::Text& generationText, Grid& grid) {
+void GUI::render(RenderWindow& window, Text& generationText, Grid& grid) {
     window.clear();
 
     // Rendre la grille
-    sf::RectangleShape cell(sf::Vector2f(cellSize - 1.0f, cellSize - 1.0f));
-    for (int y = 0; y < grid.getsizeY(); ++y) {
-        for (int x = 0; x < grid.getsizeX(); ++x) {
+    RectangleShape cell(Vector2f(cellSize - 1.0f, cellSize - 1.0f));
+    for (int y = 0; y < grid.getSizeY(); ++y) {
+        for (int x = 0; x < grid.getSizeX(); ++x) {
             if (grid[y][x].getState()) {
                 cell.setPosition(x * cellSize, y * cellSize);
                 window.draw(cell);
@@ -68,7 +68,7 @@ void GUI::render(sf::RenderWindow& window, sf::Text& generationText, Grid& grid)
     }
  // Déréférencer le pointeur
     livingCellsText.setCharacterSize(20);
-    livingCellsText.setFillColor(sf::Color::White);
+    livingCellsText.setFillColor(Color::White);
     livingCellsText.setString("Living Cells: " + std::to_string(livingCells));
     livingCellsText.setPosition((grid.getsizeX() * cellSize) / 2 - 50, 35);  // Centré sous le compteur de générations
     window.draw(livingCellsText);
@@ -79,10 +79,10 @@ void GUI::render(sf::RenderWindow& window, sf::Text& generationText, Grid& grid)
 
 
 // Gérer les clics pour ajouter des cellules vivantes
-void GUI::handleMouseClick(sf::RenderWindow &window) {
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+void GUI::handleMouseClick(RenderWindow &window) {
+    if (Mouse::isButtonPressed(Mouse::Left)) {
         // Récupérer la position du clic
-        sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+        Vector2i mousePos = Mouse::getPosition(window);
         int x = mousePos.x / cellSize;
         int y = mousePos.y / cellSize;
 
@@ -90,7 +90,7 @@ void GUI::handleMouseClick(sf::RenderWindow &window) {
         if (x >= 0 && x < grid.getSizeX() && y >= 0 && y < grid.getSizeY()) {
             grid.stateChange(y, x);
             
-            sf::sleep(sf::milliseconds(50));
+            sleep(milliseconds(50));
         }
     }
 }
@@ -112,39 +112,39 @@ void GUI::placePattern(const std::vector<std::vector<int>>& pattern) {
 // Motifs prédéfinis
 
 
-void GUI::play() {
+void GUI::play(Grid& grid) {
     while (window.isOpen()) {
-        sf::Event event;
+        Event event;
         while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
+            if (event.type == Event::Closed)
                 window.close();
 
-            if (event.type == sf::Event::KeyPressed) {
-                if (event.key.code == sf::Keyboard::Space) {
+            if (event.type == Event::KeyPressed) {
+                if (event.key.code == Keyboard::Space) {
                     isPaused = !isPaused;  // Pause
                 }
-                if (event.key.code == sf::Keyboard::C) {
-                    clearGrid();  // Effacer
+                if (event.key.code == Keyboard::C) {
+                    grid.clearGrid();  // Effacer
                 }
-                if (event.key.code == sf::Keyboard::Num1) {
+                if (event.key.code == Keyboard::Num1) {
                     placePattern(glider);
                 }
-                if (event.key.code == sf::Keyboard::Num2) {
+                if (event.key.code == Keyboard::Num2) {
                     placePattern(canon);
                 }
-                if (event.key.code == sf::Keyboard::Num3) {
+                if (event.key.code == Keyboard::Num3) {
                     placePattern(ship);
                 }
-                if (event.key.code == sf::Keyboard::Num5) {
+                if (event.key.code == Keyboard::Num5) {
                     placePattern(pulsar);
                 }
-                if (event.key.code == sf::Keyboard::Num7) {
+                if (event.key.code == Keyboard::Num7) {
                     placePattern(a_corn);
                 }
-                if (event.key.code == sf::Keyboard::Add) {
+                if (event.key.code == Keyboard::Add) {
                     pause -= 25;
                 }
-                if (event.key.code == sf::Keyboard::Subtract) {
+                if (event.key.code == Keyboard::Subtract) {
                     pause += 25;
                 }
             }
@@ -153,12 +153,11 @@ void GUI::play() {
         handleMouseClick(window);
 
         if (!isPaused) {
-            updateGrid();
+            grid.updateGrid();
         }
 
         render(window, generationText);
 
-        sf::sleep(sf::milliseconds(pause));  // Délai
+        sleep(milliseconds(pause));  // Délai
     }
 }
-*/
