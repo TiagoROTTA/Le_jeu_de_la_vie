@@ -40,7 +40,13 @@ void Grid::create() {
 
 // Vérifie les voisins d'une cellule et applique les règles du jeu
 void Grid::surroundingCheck(int posY, int posX) {
-    if (!grid[posY][posX].getObstacle()){
+    if (grid[posY][posX].getObstacle()) {
+        // Une cellule obstacle reste vivante et immuable
+        tmp[posY][posX].editState(true);
+        tmp[posY][posX].editObstacle(true);
+        return;
+    }
+
     int nearby = 0; // Compteur de voisins vivants
     bool stateCell = grid[posY][posX].getState(); // État actuel de la cellule
 
@@ -73,14 +79,18 @@ void Grid::surroundingCheck(int posY, int posX) {
         tmp[posY][posX].editState(false); // Sinon, la cellule meurt ou reste morte
     }
     
-    }
 }
+
 
 // Affiche la grille actuelle dans la console
 void Grid::displayGrid() const {
     for (int i = 0; i < sizeY; i++) {
         for (int j = 0; j < sizeX; j++) {
-            cout << (grid[i][j].getState() ? "O" : "."); // Affiche 'O' pour vivant, '.' pour mort
+            if (grid[i][j].getObstacle()) {
+                cout << "X"; // Affiche 'X' pour les obstacles
+            } else {
+                cout << (grid[i][j].getState() ? "O" : "."); // 'O' pour vivant, '.' pour mort
+            }
         }
         cout << endl;
     }
@@ -189,7 +199,13 @@ string Grid::initGrid() {
             for (int j = 0; j < cols; ++j) {
                 int value;
                 file >> value;
-                if (value == 1) stateChange(i, j);
+                if (value == 1) {
+                    stateChange(i, j);
+                } else if (value == 2) {
+                    grid[i][j].editState(true);   // Une cellule obstacle est vivante
+                    grid[i][j].editObstacle(true);   // Est marquée comme un obstacle
+                }
+
             }
         }
 
