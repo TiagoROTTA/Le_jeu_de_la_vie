@@ -1,5 +1,4 @@
 /*
-
 #include "GUI.hpp"
 #include <SFML/Graphics.hpp>
 #include <vector>
@@ -25,15 +24,7 @@ GUI::GUI(int cellSize, int gridWidth, int gridHeight){
     generationText.setPosition((gridWidth * cellSize) / 2 - 50, 5);  // Centré en haut
 }
 
-// Effacer la grille (toutes les cellules mortes)
-void Grid::clearGrid() {
-    for (int y = 0; y < sizeY; ++y) {
-        for (int x = 0; x < sizeX; ++x) {
-            grid[y][x].editState(false);
-        }
-    }
-    generationCount = 0;  // Réinitialiser le compteur
-}
+
 
 // Compter le nombre de cellules vivantes
 int GUI::countLivingCells(Grid& grid) {

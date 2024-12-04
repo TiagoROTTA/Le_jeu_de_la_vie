@@ -28,4 +28,5 @@ public:
     string initGrid();
     void folderCheck(string outputFolder); 
     void changePath(string path);
+    void clearGrid(int& generationCount);
 };

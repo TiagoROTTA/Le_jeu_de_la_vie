@@ -113,6 +113,17 @@ void Grid::updateGrid() {
 }
 
 
+// Effacer la grille (toutes les cellules mortes)
+void Grid::clearGrid(int& generationCount) {
+    for (int y = 0; y < sizeY; ++y) {
+        for (int x = 0; x < sizeX; ++x) {
+            grid[y][x].editState(false);
+        }
+    }
+    generationCount = 0;  // Réinitialiser le compteur
+}
+
+
 bool Grid::folderExists(string folderpath) {
     struct stat info;
     if (stat(folderpath.c_str(), &info) != 0) {
