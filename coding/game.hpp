@@ -1,4 +1,6 @@
 #pragma once
+#include "grid.hpp"
+#include<string>
 
 class Game {
 private:
@@ -6,7 +8,7 @@ private:
 public:
     Game(bool mode = 0): mode(mode) {}               // Constructeur
     bool getMode();
-    void gameTerminal(int iterationAmount)const;
+    void gameTerminal(int iterationAmount, std::string& outputFolder, Grid& grid)const;
     void gameGUI(int iterationAmount)const;
     void gameLoop();
 };

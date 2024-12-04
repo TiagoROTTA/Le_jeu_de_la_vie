@@ -1,6 +1,5 @@
 #include <iostream>
 #include "game.hpp"
-#include "grid.hpp"
 #include <chrono>
 #include <thread>
 #include <fstream>
@@ -17,11 +16,7 @@ bool Game::getMode(){
     return mode;
 };
 
-void Game::gameTerminal(int iterationAmount)const{
-    int gridY = 20;
-    int gridX = 40;
-    Grid grid(gridY, gridX);
-    string outputFolder= grid.initGrid();
+void Game::gameTerminal(int iterationAmount, string& outputFolder, Grid& grid)const{
     for (int i = 0; i<iterationAmount; i++) {
         string filePath = outputFolder + "/iteration_" + to_string(i) + ".txt";
         grid.changePath(filePath);
@@ -41,8 +36,12 @@ void Game::gameLoop(){
     int iterationAmount;
     cout << "Entrez le nombre d'itérations souhaité : " << endl;
     cin >> iterationAmount;
+    int gridY = 20;
+    int gridX = 40;
+    Grid grid(gridY, gridX);
+    string outputFolder= grid.initGrid();
     if (!mode){
-        gameTerminal(iterationAmount);
+        gameTerminal(iterationAmount, outputFolder, grid);
     }
     else {
         gameGUI(iterationAmount);
