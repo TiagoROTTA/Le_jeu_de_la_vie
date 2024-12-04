@@ -162,6 +162,10 @@ string Grid::initGrid() {
         file >> rows >> cols;
         sizeY = rows;
         sizeX = cols;
+        grid.resize(sizeY);
+        for (auto& row : grid){
+            row.resize(sizeX);
+        }
         create();
 
         for (int i = 0; i < rows; ++i) {

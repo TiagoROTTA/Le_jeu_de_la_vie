@@ -1,3 +1,5 @@
+/*
+
 #include "GUI.hpp"
 #include <SFML/Graphics.hpp>
 #include <vector>
@@ -168,3 +170,4 @@ void GUI::play() {
         sf::sleep(sf::milliseconds(pause));  // Délai
     }
 }
+*/
