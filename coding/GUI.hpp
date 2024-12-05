@@ -71,7 +71,7 @@ private:
     };
 
 public:
-    GUI(int cellSize, int gridWidth, int gridHeight, Grid* grid);
+    GUI(int cellSize, Grid* grid);
 
     void play(); // Méthode principale pour jouer
     void render(); // Méthode pour afficher la grille
