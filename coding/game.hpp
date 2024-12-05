@@ -11,6 +11,6 @@ public:
     void getMode();
     Grid gameInit();
     void gameTerminal(int iterationAmount, Grid& grid)const;
-    void gameGUI(int iterationAmount, Grid& grid)const;
+    void gameGUI(Grid& grid)const;
     void gameLoop();
 };
