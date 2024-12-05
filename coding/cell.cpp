@@ -15,3 +15,7 @@ bool Cell::getObstacle() const {
 void Cell::editState(bool state) {
     living = state;
 }
+
+void Cell::editObstacle(bool isObstacle) {
+    obstacle = isObstacle;
+}
