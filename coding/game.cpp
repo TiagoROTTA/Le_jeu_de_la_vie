@@ -20,7 +20,6 @@ Grid Game::gameInit() {
     cout << "Utiliser un fichier (1) ou configurer manuellement (2) ? ";
     cin >> state;
 
-    string outputFolder;
     Grid grid; // Déclaré ici pour être accessible après les blocs conditionnels.
 
     if (state == 1) {
@@ -53,18 +52,17 @@ Grid Game::gameInit() {
 
 
 
-void Game::gameTerminal(int iterationAmount, string& outputFolder, Grid& grid)const{
+void Game::gameTerminal(int iterationAmount, Grid& grid)const{
     for (int i = 0; i<iterationAmount; i++) {
         string filePath = outputFolder + "/iteration_" + to_string(i) + ".txt";
-        grid.changePath(filePath);
-        grid.updateGrid(mode);
+        grid.updateGrid(mode, filePath);
         grid.displayGrid();
         this_thread::sleep_for(chrono::milliseconds(500));
         system("clear");
     }
 };
 
-void Game::gameGUI(int iterationAmount, Grid& grid) const{
+void Game::gameGUI(Grid& grid) const{
     GUI graphic(5, 100, 100, &grid);
     graphic.play();
     grid.updateGrid(mode);
@@ -77,9 +75,9 @@ void Game::gameLoop(){
     cin >> iterationAmount;
     Grid grid = gameInit();
     if (!mode){
-        gameTerminal(iterationAmount, outputFolder, grid);
+        gameTerminal( iterationAmount, grid);
     }
     else {
-        gameGUI(iterationAmount, grid);
+        gameGUI(grid);
     }
 };
