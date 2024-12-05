@@ -107,7 +107,9 @@ bool Grid::getCellState(int posY, int posX) const {
     return grid[posY][posX].getState();
 }
 
-
+bool Grid::getCellObstacle(int posY, int posX) const {
+    return grid[posY][posX].getObstacle();
+}
 
 void Grid::updateGrid(bool mode) {
     if (!mode){

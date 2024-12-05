@@ -21,6 +21,7 @@ public:
     Grid(int sizeX = 20, int sizeY = 20);
     void create();
     bool getCellState(int posY, int posX) const; 
+    bool getCellObstacle(int posY, int posX) const;
     void displayGrid()const;
     int getSizeX()const;
     int getSizeY()const;

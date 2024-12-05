@@ -64,7 +64,7 @@ void Game::gameTerminal(int iterationAmount, string& outputFolder, Grid& grid)co
     }
 };
 
-void Game::gameGUI(Grid& grid) const{
+void Game::gameGUI(int iterationAmount, Grid& grid) const{
     GUI graphic(5, 100, 100, &grid);
     graphic.play();
     grid.updateGrid(mode);
@@ -72,6 +72,7 @@ void Game::gameGUI(Grid& grid) const{
 
 
 void Game::gameLoop(){
+    
     Grid grid = gameInit();
     if (!mode){
         int iterationAmount;
@@ -80,6 +81,6 @@ void Game::gameLoop(){
         gameTerminal(iterationAmount, outputFolder, grid);
     }
     else {
-        gameGUI(grid);
+        gameGUI(iterationAmount, grid);
     }
 };

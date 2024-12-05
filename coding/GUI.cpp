@@ -44,7 +44,11 @@ void GUI::render() {
         for (int x = 0; x < grid->getSizeX(); ++x) {
             if (grid->getCellState(y, x)) { // Accéder à l'état d'une cellule
                 cell.setPosition(x * cellSize, y * cellSize);
-                cell.setFillColor(Color::Green);
+                if (grid->getCellObstacle(y, x)){
+                    cell.setFillColor(Color::Red);
+                }else{
+                    cell.setFillColor(Color::Green);
+                }
                 window.draw(cell);
             }
         }
