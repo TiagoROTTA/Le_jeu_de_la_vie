@@ -11,7 +11,7 @@ using namespace std;
 
 // Constructeur : initialise la grille et le tampon temporaire
 Grid::Grid(int sizeY, int sizeX) 
-    : sizeX(sizeX), sizeY(sizeY), grid(sizeY, vector<Cell>(sizeX)), tmp(sizeY, vector<Cell>(sizeX)){}
+    : sizeX(sizeX), sizeY(sizeY), grid(sizeY, vector<Cell>(sizeX)), tmp(sizeY, vector<Cell>(sizeX)), folderPath() {}
 
 // Retourne la taille X de la grille
 int Grid::getSizeX() const {
@@ -23,7 +23,9 @@ int Grid::getSizeY() const {
     return sizeY;
 }
 
-
+void Grid::changePath(string path){
+    folderPath = path;
+}
 
 // Initialise la grille avec des cellules mortes
 void Grid::create() {
@@ -107,11 +109,11 @@ bool Grid::getCellState(int posY, int posX) const {
 
 
 
-void Grid::updateGrid(bool mode, string folderPath) {
+void Grid::updateGrid(bool mode) {
     if (!mode){
-        ofstream outFile(folderPath);
+        ofstream outFile(this->folderPath);
         if (!outFile.is_open()) {
-            cerr << "Erreur : Impossible d'ouvrir le fichier " << folderPath << endl;
+            cerr << "Erreur : Impossible d'ouvrir le fichier " << this->folderPath << endl;
             return;
         }
         outFile << sizeY << " " << sizeX << "\n";
