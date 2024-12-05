@@ -70,11 +70,11 @@ void Game::gameGUI(Grid& grid) const{
 
 
 void Game::gameLoop(){
-    int iterationAmount;
-    cout << "Entrez le nombre d'itérations souhaité : " << endl;
-    cin >> iterationAmount;
     Grid grid = gameInit();
     if (!mode){
+        int iterationAmount;
+        cout << "Entrez le nombre d'itérations souhaité : " << endl;
+        cin >> iterationAmount;
         gameTerminal( iterationAmount, grid);
     }
     else {
