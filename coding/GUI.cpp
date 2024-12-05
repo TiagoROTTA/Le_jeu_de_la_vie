@@ -50,6 +50,7 @@ void GUI::render() {
         }
     }
 
+/*
     // Texte : Génération actuelle
     Font font;
     if (!font.loadFromFile("arial.ttf")) {
@@ -59,7 +60,7 @@ void GUI::render() {
     Text generationText;
     generationText.setFont(font);
     generationText.setString("Generation: " + std::to_string(generationCount));
-    generationText.setCharacterSize(20);
+    generationText.setCharacterSize(5);
     generationText.setFillColor(Color::White);
     generationText.setPosition(10, 10);
     window.draw(generationText);
@@ -68,11 +69,11 @@ void GUI::render() {
     Text livingCellsText;
     livingCellsText.setFont(font);
     livingCellsText.setString("Living Cells: " + std::to_string(countLivingCells()));
-    livingCellsText.setCharacterSize(20);
+    livingCellsText.setCharacterSize(5);
     livingCellsText.setFillColor(Color::White);
     livingCellsText.setPosition(10, 40);
     window.draw(livingCellsText);
-
+*/
     // Afficher tout
     window.display();
 }
