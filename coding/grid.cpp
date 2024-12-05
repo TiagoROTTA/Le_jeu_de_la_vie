@@ -40,7 +40,13 @@ void Grid::create() {
 
 // Vérifie les voisins d'une cellule et applique les règles du jeu
 void Grid::surroundingCheck(int posY, int posX) {
-    if (!grid[posY][posX].getObstacle()){
+    if (grid[posY][posX].getObstacle()) {
+        // Une cellule obstacle reste vivante et immuable
+        tmp[posY][posX].editState(true);
+        tmp[posY][posX].editObstacle(true);
+        return;
+    }
+
     int nearby = 0; // Compteur de voisins vivants
     bool stateCell = grid[posY][posX].getState(); // État actuel de la cellule
 
@@ -73,14 +79,18 @@ void Grid::surroundingCheck(int posY, int posX) {
         tmp[posY][posX].editState(false); // Sinon, la cellule meurt ou reste morte
     }
     
-    }
 }
+
 
 // Affiche la grille actuelle dans la console
 void Grid::displayGrid() const {
     for (int i = 0; i < sizeY; i++) {
         for (int j = 0; j < sizeX; j++) {
-            cout << (grid[i][j].getState() ? "O" : "."); // Affiche 'O' pour vivant, '.' pour mort
+            if (grid[i][j].getObstacle()) {
+                cout << "X"; // Affiche 'X' pour les obstacles
+            } else {
+                cout << (grid[i][j].getState() ? "O" : "."); // 'O' pour vivant, '.' pour mort
+            }
         }
         cout << endl;
     }
@@ -155,47 +165,30 @@ void Grid::folderCheck(string outputFolder) {
 }
 
 
-string Grid::initGrid() {
-    int state;
-    cout << "Utiliser un fichier (1) ou configurer manuellement (2) ? ";
-    cin >> state;
-
-    string outputFolder;
+void Grid::initGrid(int state, string fileName ) {
 
     if (state == 1) {
-        string fileName;
-        cout << "Entrez le chemin du fichier source : ";
-        cin >> fileName;
+        string value;
 
         ifstream file(fileName);
-        while (!file.is_open()) {
-            cout << "Le fichier ne correspond pas." << endl;
-            cout << "Veuillez entrer à nouveau le lien du fichier : ";
-            cin >> fileName;
-            file.open(fileName);
-        }
 
-        int rows, cols;
-        file >> rows >> cols;
-        sizeY = rows;
-        sizeX = cols;
-        grid.resize(sizeY);
-        for (auto& row : grid){
-            row.resize(sizeX);
-        }
         create();
 
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < cols; ++j) {
+        for (int i = 0; i < sizeY; ++i) {
+            for (int j = 0; j < sizeX; ++j) {
                 int value;
                 file >> value;
-                if (value == 1) stateChange(i, j);
+                if (value == 1) {
+                    stateChange(i, j);
+                } else if (value == 2) {
+                    grid[i][j].editState(true);   // Une cellule obstacle est vivante
+                    grid[i][j].editObstacle(true);   // Est marquée comme un obstacle
+                }
+
             }
         }
 
         file.close();
-        outputFolder = fileName.substr(0, fileName.find_last_of('.'));
-        outputFolder = outputFolder + "_out";
 
     } else if (state == 2) {
         create();
@@ -210,9 +203,6 @@ string Grid::initGrid() {
                 cout << "Coordonnées invalides." << endl;
             }
         }
-        outputFolder = "manual_out";
+        
     }
-
-    folderCheck(outputFolder);
-    return outputFolder;
 }

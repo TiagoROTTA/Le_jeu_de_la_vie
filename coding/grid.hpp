@@ -26,7 +26,7 @@ public:
     int getSizeY()const;
     void stateChange(int posX, int posY);
     void updateGrid();
-    string initGrid();
+    void initGrid(int state, string fileName=NULL);
     void folderCheck(string outputFolder); 
     void changePath(string path);
     void clearGrid(int& generationCount);
