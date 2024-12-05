@@ -10,7 +10,6 @@ private:
     int sizeX, sizeY;
     vector<vector<Cell>> grid;
     vector<vector<Cell>> tmp;
-    string folderPath;
 
 
     void surroundingCheck(int posY, int posX); // Vérifie les voisins d'une cellule et applique les règles
@@ -25,7 +24,7 @@ public:
     int getSizeX()const;
     int getSizeY()const;
     void stateChange(int posX, int posY);
-    void updateGrid(bool mode);
+    void updateGrid(bool mode, string folderPath = NULL);
     void initGrid(int state, string fileName=NULL);
     void folderCheck(string outputFolder); 
     void changePath(string path);

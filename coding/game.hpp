@@ -10,7 +10,7 @@ public:
     Game(bool mode = 0): mode(mode), outputFolder() {}               // Constructeur
     void getMode();
     Grid gameInit();
-    void gameTerminal(int iterationAmount, std::string& outputFolder, Grid& grid)const;
+    void gameTerminal(int iterationAmount, Grid& grid)const;
     void gameGUI(int iterationAmount, Grid& grid)const;
     void gameLoop();
 };
