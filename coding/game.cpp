@@ -57,7 +57,7 @@ void Game::gameTerminal(int iterationAmount, string& outputFolder, Grid& grid)co
     for (int i = 0; i<iterationAmount; i++) {
         string filePath = outputFolder + "/iteration_" + to_string(i) + ".txt";
         grid.changePath(filePath);
-        grid.updateGrid();
+        grid.updateGrid(mode);
         grid.displayGrid();
         this_thread::sleep_for(chrono::milliseconds(500));
         system("clear");
@@ -67,7 +67,7 @@ void Game::gameTerminal(int iterationAmount, string& outputFolder, Grid& grid)co
 void Game::gameGUI(int iterationAmount, Grid& grid) const{
     GUI graphic(5, 100, 100, &grid);
     graphic.play();
-
+    grid.updateGrid(mode);
 }
 
 

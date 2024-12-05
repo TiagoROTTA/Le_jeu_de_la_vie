@@ -151,7 +151,7 @@ void GUI::play() {
         handleMouseClick();
 
         if (!isPaused) {
-            grid->updateGrid();
+            grid->updateGrid(1);
         }
 
         render();
