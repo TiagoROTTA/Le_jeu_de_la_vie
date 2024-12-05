@@ -75,7 +75,7 @@ void Game::gameLoop(){
     cin >> iterationAmount;
     Grid grid = gameInit();
     if (!mode){
-        gameTerminal( grid);
+        gameTerminal( iterationAmount, grid);
     }
     else {
         gameGUI(grid);
