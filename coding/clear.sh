@@ -1,6 +1,5 @@
 #!/bin/bash
 
-#Syntax:
 #./clear.sh test_out
 
 # Check if the folder path is provided as an argument
