@@ -109,22 +109,30 @@ bool Grid::getCellState(int posY, int posX) const {
 
 
 
-void Grid::updateGrid() {
-    ofstream outFile(this->folderPath);
-    if (!outFile.is_open()) {
-        cerr << "Erreur : Impossible d'ouvrir le fichier " << this->folderPath << endl;
-        return;
-    }
-    outFile << sizeY << " " << sizeX << "\n";
-
-    for (int i = 0; i < sizeY; i++) {
-        for (int j = 0; j < sizeX; j++) {
-            surroundingCheck(i, j); // Calculer le nouvel état pour chaque cellule
-            outFile << (tmp[i][j].getState() ? 1 : 0) << " ";
+void Grid::updateGrid(bool mode) {
+    if (!mode){
+        ofstream outFile(this->folderPath);
+        if (!outFile.is_open()) {
+            cerr << "Erreur : Impossible d'ouvrir le fichier " << this->folderPath << endl;
+            return;
         }
-        outFile << "\n";
+        outFile << sizeY << " " << sizeX << "\n";
+
+        for (int i = 0; i < sizeY; i++) {
+            for (int j = 0; j < sizeX; j++) {
+                surroundingCheck(i, j); // Calculer le nouvel état pour chaque cellule
+                outFile << (tmp[i][j].getState() ? 1 : 0) << " ";
+            }
+            outFile << "\n";
+        }
+        outFile.close();
+    }else{
+        for (int i = 0; i < sizeY; i++) {
+            for (int j = 0; j < sizeX; j++) {
+                surroundingCheck(i, j); // Calculer le nouvel état pour chaque cellule
+            }
+        }
     }
-    outFile.close();
     grid = tmp; // Remplacer la grille principale par le tampon
 }
 
