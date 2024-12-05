@@ -63,7 +63,7 @@ void Game::gameTerminal(int iterationAmount, Grid& grid)const{
 };
 
 void Game::gameGUI(Grid& grid) const{
-    GUI graphic(5, &grid);
+    GUI graphic(5, 100, 100, &grid);
     graphic.play();
     grid.updateGrid(mode);
 }
