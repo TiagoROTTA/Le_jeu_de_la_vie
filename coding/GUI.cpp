@@ -1,4 +1,3 @@
-
 #include "GUI.hpp"
 #include <SFML/Graphics.hpp>
 #include <ctime>
@@ -9,22 +8,15 @@
 
 using namespace sf;
 
-GUI::GUI(int cellSize, Grid* grid)
+GUI::GUI(int cellSize , int gridWidth, int gridHeight, Grid* grid)
     : cellSize(cellSize),
+      gridWidth(gridWidth),
+      gridHeight(gridHeight),
+      window(VideoMode(gridWidth * cellSize, gridHeight * cellSize), "Game of Life"),
       grid(grid),
       generationCount(0),
       pause(100),
-      isPaused(false) {
-    
-    // Obtenir la résolution de l'écran
-    sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
-    gridWidth = desktopMode.width / cellSize;   // Calculer la largeur de la grille
-    gridHeight = desktopMode.height / cellSize; // Calculer la hauteur de la grille
-
-    // Créer la fenêtre adaptée à l'écran
-    window.create(sf::VideoMode(gridWidth * cellSize, gridHeight * cellSize), "Game of Life");
-}
-
+      isPaused(false) {}
 
 
 
