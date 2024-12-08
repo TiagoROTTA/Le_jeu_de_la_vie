@@ -78,8 +78,8 @@ void Game::gameTerminal(int iterationAmount, Grid& grid)const{
 
 
 // Displaying the game with a graphical interface
-void Game::gameGUI( Grid& grid) const{
-    GUI graphic(5, 100, 100, &grid);
+void Game::gameGUI(Grid& grid) const{
+    GUI graphic(10, grid.getSizeX(), grid.getSizeY(), &grid);
     graphic.play();
     grid.updateGrid(mode);
 }
