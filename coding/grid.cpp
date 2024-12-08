@@ -128,6 +128,12 @@ void Grid::stateChange(int posY, int posX) {
 }
 
 
+// Changes if a cell is an obstacle
+void Grid::obstacleChange(int posX, int posY){
+    grid[posY][posX].editObstacle(!grid[posY][posX].getObstacle());
+}
+
+
 // Return specified cell's state
 bool Grid::getCellState(int posY, int posX) const {
     return grid[posY][posX].getState();
@@ -187,6 +193,9 @@ void Grid::clearGrid() {
     for (int y = 0; y < sizeY; ++y) {
         for (int x = 0; x < sizeX; ++x) {
             grid[y][x].editState(false);
+            grid[y][x].editObstacle(false);
+            tmp[y][x].editState(false);      // Réinitialisation de tmp
+            tmp[y][x].editObstacle(false);   // Réinitialisation des obstacles
         }
     }
 }

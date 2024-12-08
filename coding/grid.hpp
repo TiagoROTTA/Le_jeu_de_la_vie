@@ -25,6 +25,7 @@ public:
     int getSizeX()const;                                    // Returns grid size on X axis
     int getSizeY()const;                                    // Returns grid size on Y axis
     void stateChange(int posX, int posY);                   // Changes cell state (alive <-> dead)
+    void obstacleChange(int posX, int posY);                 // Changes if a cell is an obstacle
     void updateGrid(bool mode);                             // Update each cell's state based on game rules and given mode
     void initGrid(int state, string fileName=NULL);         // Initializes the grid with a starting configuration
     void folderCheck(string outputFolder);                  // Manages iterations and writing to files

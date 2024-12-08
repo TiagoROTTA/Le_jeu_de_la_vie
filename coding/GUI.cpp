@@ -1,4 +1,3 @@
-
 #include "GUI.hpp"
 #include <SFML/Graphics.hpp>
 #include <ctime>
@@ -16,7 +15,8 @@ GUI::GUI(int cellSize , int gridWidth, int gridHeight, Grid* grid)
       window(VideoMode(gridWidth * cellSize, gridHeight * cellSize), "Game of Life"),
       grid(grid),
       pause(100),
-      isPaused(false) {}
+      isPaused(false),
+      createObstacle(false) {}
 
 
 // Render the grid in a new window
@@ -52,6 +52,9 @@ void GUI::handleMouseClick() {
 
         if (x >= 0 && x < grid->getSizeX() && y >= 0 && y < grid->getSizeY()) {
             grid->stateChange(y, x); // Switch cell's state upon clicking
+            if (createObstacle){
+                grid->obstacleChange(x, y); // Switch if cell's is an obstacle upon clicking
+            }
             std::this_thread::sleep_for(std::chrono::milliseconds(50)); // Anti bouncing command
         }
     }
@@ -86,6 +89,9 @@ void GUI::play() {
             if (event.type == Event::KeyPressed) {
                 if (event.key.code == Keyboard::Space) {
                     isPaused = !isPaused;               // Pressing space will pause/unpause the game
+                }
+                if (event.key.code == Keyboard::O) {
+                    createObstacle = !createObstacle;   // Pressing O places a obstacle cell
                 }
                 if (event.key.code == Keyboard::C) {
                     grid->clearGrid();   // Pressing C will clear the grid
