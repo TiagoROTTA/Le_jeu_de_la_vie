@@ -9,7 +9,7 @@
 
 using namespace std;
 
-// Mode selection method
+// Gamemode selection: terminal (0) or graphical interface (1)
 void Game::getMode(){
     cout << "Chose the display mode :" << endl;
     cout << "0 : Terminal" << endl;
@@ -55,7 +55,11 @@ Grid Game::gameInit() {
         outputFolder = "manual_out";
     }
 
-    grid.folderCheck(outputFolder);
+    // Create folder in terminal mode
+    if (mode == 0){
+        grid.folderCheck(outputFolder);
+    }
+
     return grid;
 }
 
@@ -81,7 +85,7 @@ void Game::gameGUI( Grid& grid) const{
 }
 
 
-// Manage grid creation and the way the game is displayed according to user's choices
+// Manage grid creation and the way the game is displayed according to user's choices and Conway's game of life rules
 void Game::gameLoop(){
     Grid grid = gameInit();
 

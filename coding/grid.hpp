@@ -29,5 +29,5 @@ public:
     void initGrid(int state, string fileName=NULL);         // Initializes the grid with a starting configuration
     void folderCheck(string outputFolder);                  // Manages iterations and writing to files
     void changePath(string path);                           // Change writing folder path
-    void clearGrid();                   // Clear the grid: set each cells' state to dead
+    void clearGrid();                                       // Clear the grid: set each cells' state to dead
 };

@@ -9,9 +9,9 @@ private:
 
 public:
     Game(bool mode = 0): mode(mode), outputFolder() {}              // Constructor
-    void getMode();                                                 // Mode selection method
+    void getMode();                                                 // Gamemode selection: terminal (0) or graphical interface (1)
     Grid gameInit();                                                // Game start: setting up the first generation
     void gameTerminal(int iterationAmount, Grid& grid)const;        // Displaying the game in terminal
     void gameGUI(Grid& grid)const;                                  // Displaying the game with a graphical interface
-    void gameLoop();                                                // Manage grid creation and the way the game is displayed according to user's choices
+    void gameLoop();                                                // Manage grid creation and the way the game is displayed according to user's choices and Conway's game of life rules
 };
