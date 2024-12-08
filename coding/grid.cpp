@@ -183,13 +183,12 @@ void Grid::updateGrid(bool mode) {
 
 
 // Clear the grid: set each cells' state to dead
-void Grid::clearGrid(int& generationCount) {
+void Grid::clearGrid() {
     for (int y = 0; y < sizeY; ++y) {
         for (int x = 0; x < sizeX; ++x) {
             grid[y][x].editState(false);
         }
     }
-    generationCount = 0;  // Reset the count
 }
 
 

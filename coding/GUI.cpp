@@ -15,24 +15,8 @@ GUI::GUI(int cellSize , int gridWidth, int gridHeight, Grid* grid)
       gridHeight(gridHeight),
       window(VideoMode(gridWidth * cellSize, gridHeight * cellSize), "Game of Life"),
       grid(grid),
-      generationCount(0),
       pause(100),
       isPaused(false) {}
-
-
-// Count the amount of living cells
-int GUI::countLivingCells() {
-    int count = 0;
-
-    for (int y = 0; y < grid->getSizeY(); ++y) {
-        for (int x = 0; x < grid->getSizeX(); ++x) {
-            if (grid->getCellState(y, x)) {
-                count++;
-            }
-        }
-    }
-    return count;
-}
 
 
 // Render the grid in a new window
@@ -104,7 +88,7 @@ void GUI::play() {
                     isPaused = !isPaused;               // Pressing space will pause/unpause the game
                 }
                 if (event.key.code == Keyboard::C) {
-                    grid->clearGrid(generationCount);   // Pressing C will clear the grid
+                    grid->clearGrid();   // Pressing C will clear the grid
                 }
                 if (event.key.code == Keyboard::Num1) {
                     placePattern(glider);               // Pressing 1 places a basic glider pattern

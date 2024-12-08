@@ -13,10 +13,8 @@ private:
     int gridHeight;                             // Grid height in the graphical interface window
     sf::RenderWindow window;                    // SFML render window for displaying graphical content
     Grid* grid;                                 // Pointer to the current grid
-    int generationCount;
     int pause;                                  // Delay between 2 generations
     bool isPaused;                              // Wether the display is paused (1) or not (0)
-    int countLivingCells();                     // Auxiliary method to count alive cells
 
 
     //Bunch of preset patterns:
