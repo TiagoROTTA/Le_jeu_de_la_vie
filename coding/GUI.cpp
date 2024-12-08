@@ -6,9 +6,9 @@
 #include <thread>
 #include <chrono>
 
-
 using namespace sf;
 
+// Constructor
 GUI::GUI(int cellSize , int gridWidth, int gridHeight, Grid* grid)
     : cellSize(cellSize),
       gridWidth(gridWidth),
@@ -20,10 +20,10 @@ GUI::GUI(int cellSize , int gridWidth, int gridHeight, Grid* grid)
       isPaused(false) {}
 
 
-
-// Compter le nombre de cellules vivantes
+// Count the amount of living cells
 int GUI::countLivingCells() {
     int count = 0;
+
     for (int y = 0; y < grid->getSizeY(); ++y) {
         for (int x = 0; x < grid->getSizeX(); ++x) {
             if (grid->getCellState(y, x)) {
@@ -34,69 +34,47 @@ int GUI::countLivingCells() {
     return count;
 }
 
-// Rendre la grille et le texte dans la fenêtre
+
+// Render the grid in a new window
 void GUI::render() {
     window.clear();
 
-    // Dessiner les cellules
+    // Draw cells
     RectangleShape cell(Vector2f(cellSize - 1.0f, cellSize - 1.0f));
     for (int y = 0; y < grid->getSizeY(); ++y) {
         for (int x = 0; x < grid->getSizeX(); ++x) {
-            if (grid->getCellState(y, x)) { // Accéder à l'état d'une cellule
-                cell.setPosition(x * cellSize, y * cellSize);
+            if (grid->getCellState(y, x)) { // Consider living cells only
+                cell.setPosition(x * cellSize, y * cellSize);   // Visually place the cell on the interface, according to its coordinates
                 if (grid->getCellObstacle(y, x)){
-                    cell.setFillColor(Color::Red);
+                    cell.setFillColor(Color::Red);  // Obstacle cells will be red
                 }else{
-                    cell.setFillColor(Color::Green);
+                    cell.setFillColor(Color::Green);    // Non obstacle living cells will be green
                 }
                 window.draw(cell);
             }
         }
     }
-
-/*
-    // Texte : Génération actuelle
-    Font font;
-    if (!font.loadFromFile("arial.ttf")) {
-        throw std::runtime_error("Failed to load font arial.ttf");
-    }
-
-    Text generationText;
-    generationText.setFont(font);
-    generationText.setString("Generation: " + std::to_string(generationCount));
-    generationText.setCharacterSize(5);
-    generationText.setFillColor(Color::White);
-    generationText.setPosition(10, 10);
-    window.draw(generationText);
-
-    // Texte : Nombre de cellules vivantes
-    Text livingCellsText;
-    livingCellsText.setFont(font);
-    livingCellsText.setString("Living Cells: " + std::to_string(countLivingCells()));
-    livingCellsText.setCharacterSize(5);
-    livingCellsText.setFillColor(Color::White);
-    livingCellsText.setPosition(10, 40);
-    window.draw(livingCellsText);
-*/
-    // Afficher tout
+    // Display the whole grid
     window.display();
 }
 
 
-// Gérer les clics pour ajouter des cellules vivantes
+// Handle mouse clicks to add living cells manually
 void GUI::handleMouseClick() {
     if (Mouse::isButtonPressed(Mouse::Left)) {
-        Vector2i mousePos = Mouse::getPosition(window);
+        Vector2i mousePos = Mouse::getPosition(window); // Get mouse position and make it correspond to a cell
         int x = mousePos.x / cellSize;
         int y = mousePos.y / cellSize;
 
         if (x >= 0 && x < grid->getSizeX() && y >= 0 && y < grid->getSizeY()) {
-            grid->stateChange(y, x); // Basculer l'état de la cellule
-            std::this_thread::sleep_for(std::chrono::milliseconds(50));
+            grid->stateChange(y, x); // Switch cell's state upon clicking
+            std::this_thread::sleep_for(std::chrono::milliseconds(50)); // Anti bouncing command
         }
     }
 }
 
+
+// Place set patterns (glider, canon, ship, pulsar, acorn)
 void GUI::placePattern(const std::vector<std::vector<int>>& pattern) {
     int startX = gridWidth / 2 - pattern.size() / 2;
     int startY = gridHeight / 2 - pattern[0].size() / 2;
@@ -112,9 +90,8 @@ void GUI::placePattern(const std::vector<std::vector<int>>& pattern) {
     }
 }
 
-// Motifs prédéfinis
 
-
+// Main method to play the game
 void GUI::play() {
     while (window.isOpen()) {
         Event event;
@@ -124,31 +101,31 @@ void GUI::play() {
 
             if (event.type == Event::KeyPressed) {
                 if (event.key.code == Keyboard::Space) {
-                    isPaused = !isPaused;  // Pause
+                    isPaused = !isPaused;               // Pressing space will pause/unpause the game
                 }
                 if (event.key.code == Keyboard::C) {
-                    grid->clearGrid(generationCount);  // Effacer
+                    grid->clearGrid(generationCount);   // Pressing C will clear the grid
                 }
                 if (event.key.code == Keyboard::Num1) {
-                    placePattern(glider);
+                    placePattern(glider);               // Pressing 1 places a basic glider pattern
                 }
                 if (event.key.code == Keyboard::Num2) {
-                    placePattern(canon);
+                    placePattern(canon);                // Pressing 2 places a canon pattern
                 }
                 if (event.key.code == Keyboard::Num3) {
-                    placePattern(ship);
+                    placePattern(ship);                 // Pressing 3 places a ship pattern
                 }
                 if (event.key.code == Keyboard::Num5) {
-                    placePattern(pulsar);
+                    placePattern(pulsar);               // Pressing 5 places a pulsar pattern
                 }
                 if (event.key.code == Keyboard::Num7) {
-                    placePattern(a_corn);
+                    placePattern(a_corn);               // Pressing 7 places an acorn pattern
                 }
                 if (event.key.code == Keyboard::Add) {
-                    pause -= 25;
+                    pause -= 25;                        // Pressing + reduces the pause between 2 generations, thus making the game faster
                 }
                 if (event.key.code == Keyboard::Subtract) {
-                    pause += 25;
+                    pause += 25;                        // On the opposite, pressing - makes the game slower
                 }
             }
         }
@@ -161,6 +138,6 @@ void GUI::play() {
 
         render();
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(pause));  // Délai
+        std::this_thread::sleep_for(std::chrono::milliseconds(pause));  // Delay
     }
 }

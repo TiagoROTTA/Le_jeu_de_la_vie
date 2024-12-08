@@ -2,13 +2,14 @@
 
 class Cell {
 private:
-    bool living;                    // État de la cellule
-    bool obstacle;                  // La cellule est un obstacle ou non 
+    bool living;                                // Cell state : dead (0) or alive (1)
+    bool obstacle;                              // Wether the cell is an obstacle (1) or not (0)
+
 public:
-    Cell();                                     // Constructeur par défaut
-    Cell(bool living, bool obstacle);   // Constructeur avec état initial
-    bool getState() const;                      // Retourne l'état de la cellule
-    bool getObstacle() const;                   // Retrouen si la cellule est un obstacle
-    void editState(bool state);                 // Change l'état de la cellule
-    void editObstacle(bool isObstacle);
+    Cell();                                     // Default constructor
+    Cell(bool living, bool obstacle);           // Constructor
+    bool getState() const;                      // Return wether the cell is alive or dead
+    bool getObstacle() const;                   // Return wether the cell is an obstacle or not
+    void editState(bool state);                 // Set the cell state (alive or dead)
+    void editObstacle(bool isObstacle);         // Set a cell as obstacle or not
 };
