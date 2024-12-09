@@ -56,7 +56,8 @@ Ce projet implémente une version interactive et graphique du **Jeu de la vie** 
 3. Si vous utilisez le **mode graphique**, utilisez les raccourcis suivants :
    - `Espace` : Pause/Reprise.
    - `C` : Réinitialisation de la grille.
-   - `Flèches Haut/Bas` : Modifier la vitesse.
+   - `+/-` : Modifier la vitesse.
+   - `O` : Changer les cellules en obstacle.
 
 ---
 
