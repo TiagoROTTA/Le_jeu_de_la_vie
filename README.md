@@ -88,7 +88,57 @@ Exemple :
 0 1 2 0 0 0 2 1 0 0
 ...
 ```
+Voici une section à ajouter au **README** pour expliquer l'utilisation du script `genMatrix.sh` et comment personnaliser la grille générée :
 
+---
+
+## Génération de grilles avec `genMatrix.sh`
+
+### Description
+Le script `genMatrix.sh` permet de générer facilement un fichier texte contenant une grille de cellules pour le projet. La grille générée est initialisée avec des cellules mortes (`0`) et peut être modifiée pour inclure des cellules vivantes ou bloquées.
+
+---
+
+### Utilisation
+
+1. Rendez le script exécutable :
+   ```bash
+   chmod +x genMatrix.sh
+   ```
+
+2. Lancez le script avec deux arguments : le nombre de lignes et de colonnes de la grille.
+   Exemple pour une grille de 10x10 :
+   ```bash
+   ./genMatrix.sh 10 10
+   ```
+
+3. Le fichier généré sera nommé dynamiquement en fonction de la taille de la grille (par exemple, `grille_10x10.txt`).
+
+4. Contenu d'une grille par défaut (exemple pour une grille 3x3) :
+   ```
+   # Grille de taille 3x3
+   3 3
+   0 0 0 
+   0 0 0 
+   0 0 0
+   ```
+
+---
+
+### Modification manuelle de la grille
+Une fois le fichier généré, vous pouvez modifier les cellules directement dans le fichier texte pour inclure des états spécifiques :
+- `0` : Cellule morte (par défaut)
+- `1` : Cellule vivante
+- `2` : Cellule bloquée (ou tout autre état personnalisé selon votre projet)
+
+Exemple d'une grille 3x3 modifiée :
+```
+# Grille de taille 3x3
+3 3
+0 1 0 
+2 0 0 
+0 0 1
+```
 ---
 
 ## À Propos
