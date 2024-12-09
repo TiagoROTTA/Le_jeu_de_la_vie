@@ -91,31 +91,31 @@ void GUI::play() {
                     isPaused = !isPaused;               // Pressing space will pause/unpause the game
                 }
                 if (event.key.code == Keyboard::O) {
-                    createObstacle = !createObstacle;   // Pressing O places a obstacle cell
+                    createObstacle = !createObstacle;   // Pressing 'O' places a obstacle cell
                 }
                 if (event.key.code == Keyboard::C) {
-                    grid->clearGrid();   // Pressing C will clear the grid
+                    grid->clearGrid();                  // Pressing 'C' will clear the grid
                 }
                 if (event.key.code == Keyboard::Num1) {
-                    placePattern(glider);               // Pressing 1 places a basic glider pattern
+                    placePattern(glider);               // Pressing '1' places a basic glider pattern
                 }
                 if (event.key.code == Keyboard::Num2) {
-                    placePattern(canon);                // Pressing 2 places a canon pattern
+                    placePattern(canon);                // Pressing '2' places a canon pattern
                 }
                 if (event.key.code == Keyboard::Num3) {
-                    placePattern(ship);                 // Pressing 3 places a ship pattern
+                    placePattern(ship);                 // Pressing '3' places a ship pattern
                 }
                 if (event.key.code == Keyboard::Num5) {
-                    placePattern(pulsar);               // Pressing 5 places a pulsar pattern
+                    placePattern(pulsar);               // Pressing '5' places a pulsar pattern
                 }
                 if (event.key.code == Keyboard::Num7) {
-                    placePattern(a_corn);               // Pressing 7 places an acorn pattern
+                    placePattern(a_corn);               // Pressing '7' places an acorn pattern
                 }
                 if (event.key.code == Keyboard::Add) {
-                    pause -= 25;                        // Pressing + reduces the pause between 2 generations, thus making the game faster
+                    pause -= 25;                        // Pressing '+' reduces the pause between 2 generations, thus making the game faster
                 }
                 if (event.key.code == Keyboard::Subtract) {
-                    pause += 25;                        // On the opposite, pressing - makes the game slower
+                    pause += 25;                        // On the opposite, pressing '-' makes the game slower
                 }
             }
         }

@@ -15,7 +15,7 @@ private:
     Grid* grid;                                 // Pointer to the current grid
     int pause;                                  // Delay between 2 generations
     bool isPaused;                              // Wether the display is paused (1) or not (0)
-    bool createObstacle;                         // If the cell to be placed is an obstacle (1) or not (0)
+    bool createObstacle;                        // If the cell to be placed is an obstacle (1) or not (0)
 
 
     //Bunch of preset patterns:
